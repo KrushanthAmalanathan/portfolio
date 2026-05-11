@@ -27,8 +27,12 @@ export const TechParticles = () => {
       speedX: number;
       speedY: number;
       color: string;
+      canvas: HTMLCanvasElement;
+      ctx: CanvasRenderingContext2D;
 
-      constructor() {
+      constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+        this.canvas = canvas;
+        this.ctx = ctx;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 2 + 0.5;
@@ -41,19 +45,23 @@ export const TechParticles = () => {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x > canvas.width) this.x = 0;
-        else if (this.x < 0) this.x = canvas.width;
+        if (this.x > this.canvas.width) this.x = 0;
+        else if (this.x < 0) this.x = this.canvas.width;
         
-        if (this.y > canvas.height) this.y = 0;
-        else if (this.y < 0) this.y = canvas.height;
+        if (this.y > this.canvas.height) this.y = 0;
+        else if (this.y < 0) this.y = this.canvas.height;
       }
 
       draw() {
-        if (!ctx) return;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        this.ctx.fillStyle = this.color;
+        this.ctx.beginPath();
+        this.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+
+      // Helper for arc to avoid context binding issues
+      arc(x: number, y: number, r: number, s: number, e: number) {
+        this.ctx.arc(x, y, r, s, e);
       }
     }
 
@@ -61,7 +69,7 @@ export const TechParticles = () => {
       particles = [];
       const numberOfParticles = (canvas.width * canvas.height) / 15000;
       for (let i = 0; i < numberOfParticles; i++) {
-        particles.push(new Particle());
+        particles.push(new Particle(canvas, ctx));
       }
     };
 

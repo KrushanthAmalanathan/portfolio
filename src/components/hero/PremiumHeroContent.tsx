@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { StatusBadge } from "./StatusBadge";
 import { PORTFOLIO_DATA } from "@/constants/portfolio";
 import { Download, Mail, ExternalLink, GraduationCap, MapPin, Award } from "lucide-react";
 
 export const PremiumHeroContent = () => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -18,12 +18,12 @@ export const PremiumHeroContent = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -86,7 +86,7 @@ export const PremiumHeroContent = () => {
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
         className="flex-1 w-full max-w-md"
       >
         <div className="relative group">
